@@ -24,6 +24,7 @@ swaggerValidator.assert = (params, statusCode, json) => {
 
 swaggerValidator._validateRequest = (method, path, body) => {
   const model = swaggerValidator._getModel(method, path)
+  console.log(model)
 
   // Default Error model only implies a 404
   if (Object.keys(model.responses).length === 1) return null
@@ -187,6 +188,7 @@ swaggerValidator._validateOther = (model, payload, urlPath, validationPath) => {
       )
     }
   } else {
+    console.trace(model)
     throw new Error(
       `Swagger Validation: ${urlPath} Unknown type ${model.type} at ${validationPath}`
     )
