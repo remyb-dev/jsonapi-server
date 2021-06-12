@@ -8,7 +8,7 @@ const path = require('path')
 const debug = require('debug')
 
 jsonApi.setConfig({
-  graphiql: true,
+  graphiql: false,
   swagger: {
     title: 'Example JSON:API Server',
     version: '0.1.1',
