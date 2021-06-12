@@ -1,6 +1,6 @@
 'use strict'
 
-const server = module.exports = { }
+const server = (module.exports = {})
 
 const jsonApi = require('../.')
 const fs = require('fs')
@@ -12,37 +12,38 @@ jsonApi.setConfig({
   swagger: {
     title: 'Example JSON:API Server',
     version: '0.1.1',
-    description: 'This is the API description block that shows up in the swagger.json',
+    description:
+      'This is the API description block that shows up in the swagger.json',
     termsOfService: 'http://example.com/termsOfService',
     contact: {
       name: 'API Contact',
       email: 'apicontact@holidayextras.com',
-      url: 'docs.hapi.holidayextras.com'
+      url: 'docs.hapi.holidayextras.com',
     },
     license: {
       name: 'MIT',
-      url: 'http://opensource.org/licenses/MIT'
+      url: 'http://opensource.org/licenses/MIT',
     },
     security: [
       {
-        'APIKeyHeader': []
-      }
+        APIKeyHeader: [],
+      },
     ],
     securityDefinitions: {
       APIKeyHeader: {
         type: 'apiKey',
         in: 'header',
-        name: 'X-API-Auth'
-      }
-    }
+        name: 'X-API-Auth',
+      },
+    },
   },
   protocol: 'http',
   hostname: 'localhost',
   port: 16006,
   base: 'rest',
   meta: {
-    description: 'This block shows up in the root node of every payload'
-  }
+    description: 'This block shows up in the root node of every payload',
+  },
 })
 
 jsonApi.authenticate((request, callback) => {
@@ -55,15 +56,20 @@ jsonApi.authenticate((request, callback) => {
   return callback()
 })
 
-fs.readdirSync(path.join(__dirname, '/resources')).filter(filename => /^[a-z].*\.js$/.test(filename)).map(filename => path.join(__dirname, '/resources/', filename)).forEach(require)
+fs.readdirSync(path.join(__dirname, '/resources'))
+  .filter(filename => /^[a-z].*\.js$/.test(filename))
+  .map(filename => path.join(__dirname, '/resources/', filename))
+  .forEach(require)
 
 jsonApi.onUncaughtException((request, error) => {
   const errorDetails = error.stack.split('\n')
-  console.error(JSON.stringify({
-    request,
-    error: errorDetails.shift(),
-    stack: errorDetails
-  }))
+  console.error(
+    JSON.stringify({
+      request,
+      error: errorDetails.shift(),
+      stack: errorDetails,
+    })
+  )
 })
 
 jsonApi.metrics.on('data', data => {

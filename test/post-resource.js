@@ -10,7 +10,7 @@ describe('Testing jsonapi-server', () => {
     it('errors with invalid type', done => {
       const data = {
         method: 'post',
-        url: 'http://localhost:16006/rest/foobar'
+        url: 'http://localhost:16006/rest/foobar',
       }
       helpers.request(data, (err, res, json) => {
         assert.equal(err, null)
@@ -26,20 +26,24 @@ describe('Testing jsonapi-server', () => {
         method: 'post',
         url: 'http://localhost:16006/rest/articles',
         headers: {
-          'Content-Type': 'application/vnd.api+json'
+          'Content-Type': 'application/vnd.api+json',
         },
         body: JSON.stringify({
-          'data': {
-            'type': 'photos',
-            'attributes': { },
-            'relationships': { }
-          }
-        })
+          data: {
+            type: 'photos',
+            attributes: {},
+            relationships: {},
+          },
+        }),
       }
       request(data, (err, res, json) => {
         assert.equal(err, null)
         json = helpers.validateError(json)
-        assert.equal(json.errors[0].detail.length, 2, 'Expecting several validation errors')
+        assert.equal(
+          json.errors[0].detail.length,
+          2,
+          'Expecting several validation errors'
+        )
         assert.equal(res.statusCode, '403', 'Expecting 403')
 
         done()
@@ -51,11 +55,11 @@ describe('Testing jsonapi-server', () => {
         method: 'post',
         url: 'http://localhost:16006/rest/photos',
         headers: {
-          'Content-Type': 'application/vnd.api+json;foobar'
+          'Content-Type': 'application/vnd.api+json;foobar',
         },
         body: JSON.stringify({
-          'data': { }
-        })
+          data: {},
+        }),
       }
       request(data, (err, res) => {
         assert.equal(err, null)
@@ -70,11 +74,12 @@ describe('Testing jsonapi-server', () => {
         method: 'post',
         url: 'http://localhost:16006/rest/photos',
         headers: {
-          'Accept': 'application/vnd.api+xml, application/vnd.api+json;foobar, text/json'
+          Accept:
+            'application/vnd.api+xml, application/vnd.api+json;foobar, text/json',
         },
         body: JSON.stringify({
-          'data': { }
-        })
+          data: {},
+        }),
       }
       request(data, (err, res) => {
         assert.equal(err, null)
@@ -87,7 +92,7 @@ describe('Testing jsonapi-server', () => {
     it('errors if no body is detected', done => {
       const data = {
         method: 'post',
-        url: 'http://localhost:16006/rest/photos'
+        url: 'http://localhost:16006/rest/photos',
       }
       request(data, (err, res, json) => {
         assert.equal(err, null)
@@ -107,15 +112,15 @@ describe('Testing jsonapi-server', () => {
         // likely not what the developer of the api client would have intended.
         url: 'http://localhost:16006/rest/people',
         headers: {
-          'Content-Type': 'application/vnd.api+json'
+          'Content-Type': 'application/vnd.api+json',
         },
         // some api/curl clients fail to fully serialize hashes/dictionaries
         // if their encoding and Content-Type is not properly set.  In that
         // case, you end up with something like this (yes, I'm
         // looking at you, python!)
         body: JSON.stringify({
-          'data': 'attributes'
-        })
+          data: 'attributes',
+        }),
       }
       request(data, (err, res, json) => {
         assert.equal(err, null)
@@ -130,11 +135,12 @@ describe('Testing jsonapi-server', () => {
         // with NO required fields.
         assert.deepEqual(json.errors, [
           {
-            'code': 'EFORBIDDEN',
-            'detail': '"data" must be an object - have you sent the right http headers?',
-            'status': '403',
-            'title': 'Request validation failed'
-          }
+            code: 'EFORBIDDEN',
+            detail:
+              '"data" must be an object - have you sent the right http headers?',
+            status: '403',
+            title: 'Request validation failed',
+          },
         ])
         done()
       })
@@ -148,33 +154,39 @@ describe('Testing jsonapi-server', () => {
           method: 'post',
           url: 'http://localhost:16006/rest/photos',
           headers: {
-            'Content-Type': 'application/vnd.api+json'
+            'Content-Type': 'application/vnd.api+json',
           },
           body: JSON.stringify({
-            'data': {
-              'type': 'photos',
-              'attributes': {
-                'title': 'Ember Hamster',
-                'url': 'http://example.com/images/productivity.png',
-                'height': 512,
-                'width': 1024
+            data: {
+              type: 'photos',
+              attributes: {
+                title: 'Ember Hamster',
+                url: 'http://example.com/images/productivity.png',
+                height: 512,
+                width: 1024,
               },
-              'relationships': {
-                'photographer': {
-                  'data': { 'type': 'people', 'id': 'cc5cca2e-0dd8-4b95-8cfc-a11230e73116' }
-                }
+              relationships: {
+                photographer: {
+                  data: {
+                    type: 'people',
+                    id: 'cc5cca2e-0dd8-4b95-8cfc-a11230e73116',
+                  },
+                },
               },
-              'meta': {
-                'created': '2015-01-01'
-              }
-            }
-          })
+              meta: {
+                created: '2015-01-01',
+              },
+            },
+          }),
         }
         helpers.request(data, (err, res, json) => {
           assert.equal(err, null)
           json = helpers.validateJson(json)
 
-          assert.equal(res.headers.location, `http://localhost:16006/rest/photos/${json.data.id}`)
+          assert.equal(
+            res.headers.location,
+            `http://localhost:16006/rest/photos/${json.data.id}`
+          )
           assert.equal(res.statusCode, '201', 'Expecting 201')
           assert.equal(json.data.type, 'photos', 'Should be a people resource')
           helpers.validatePhoto(json.data)
@@ -186,20 +198,27 @@ describe('Testing jsonapi-server', () => {
 
       it('new resource is retrievable', done => {
         const url = `http://localhost:16006/rest/photos/${id}`
-        helpers.request({
-          method: 'GET',
-          url
-        }, (err, res, json) => {
-          assert.equal(err, null)
-          json = helpers.validateJson(json)
+        helpers.request(
+          {
+            method: 'GET',
+            url,
+          },
+          (err, res, json) => {
+            assert.equal(err, null)
+            json = helpers.validateJson(json)
 
-          assert.equal(res.statusCode, '200', 'Expecting 200 OK')
-          assert.equal(json.included.length, 0, 'Should be no included resources')
-          helpers.validatePhoto(json.data)
-          assert.deepEqual(json.data.meta, { created: '2015-01-01' })
+            assert.equal(res.statusCode, '200', 'Expecting 200 OK')
+            assert.equal(
+              json.included.length,
+              0,
+              'Should be no included resources'
+            )
+            helpers.validatePhoto(json.data)
+            assert.deepEqual(json.data.meta, { created: '2015-01-01' })
 
-          done()
-        })
+            done()
+          }
+        )
       })
       describe('creates a resource with non-UUID ID', () => {
         let id
@@ -209,25 +228,32 @@ describe('Testing jsonapi-server', () => {
             method: 'post',
             url: 'http://localhost:16006/rest/autoincrement',
             headers: {
-              'Content-Type': 'application/vnd.api+json'
+              'Content-Type': 'application/vnd.api+json',
             },
             body: JSON.stringify({
-              'data': {
-                'type': 'autoincrement',
-                'attributes': {
-                  'name': 'bar'
-                }
-              }
-            })
+              data: {
+                type: 'autoincrement',
+                attributes: {
+                  name: 'bar',
+                },
+              },
+            }),
           }
           helpers.request(data, (err, res, json) => {
             assert.equal(err, null)
             json = helpers.validateJson(json)
 
             assert.equal(json.data.id, '2')
-            assert.equal(res.headers.location, `http://localhost:16006/rest/autoincrement/${json.data.id}`)
+            assert.equal(
+              res.headers.location,
+              `http://localhost:16006/rest/autoincrement/${json.data.id}`
+            )
             assert.equal(res.statusCode, '201', 'Expecting 201')
-            assert.equal(json.data.type, 'autoincrement', 'Should be a autoincrement resource')
+            assert.equal(
+              json.data.type,
+              'autoincrement',
+              'Should be a autoincrement resource'
+            )
             id = json.data.id
 
             done()
@@ -236,16 +262,23 @@ describe('Testing jsonapi-server', () => {
 
         it('new resource is retrievable', done => {
           const url = `http://localhost:16006/rest/autoincrement/${id}`
-          helpers.request({
-            method: 'GET',
-            url
-          }, (err, res, json) => {
-            assert.equal(err, null)
-            json = helpers.validateJson(json)
-            assert.equal(res.statusCode, '200', 'Expecting 200 OK')
-            assert.equal(json.included.length, 0, 'Should be no included resources')
-            done()
-          })
+          helpers.request(
+            {
+              method: 'GET',
+              url,
+            },
+            (err, res, json) => {
+              assert.equal(err, null)
+              json = helpers.validateJson(json)
+              assert.equal(res.statusCode, '200', 'Expecting 200 OK')
+              assert.equal(
+                json.included.length,
+                0,
+                'Should be no included resources'
+              )
+              done()
+            }
+          )
         })
       })
     })

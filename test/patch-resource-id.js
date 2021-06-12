@@ -11,7 +11,7 @@ describe('Testing jsonapi-server', () => {
       it('errors with invalid type', done => {
         const data = {
           method: 'patch',
-          url: 'http://localhost:16006/rest/foobar/someId'
+          url: 'http://localhost:16006/rest/foobar/someId',
         }
         helpers.request(data, (err, res, json) => {
           assert.equal(err, null)
@@ -27,13 +27,13 @@ describe('Testing jsonapi-server', () => {
           method: 'patch',
           url: 'http://localhost:16006/rest/comments/foobar',
           headers: {
-            'Content-Type': 'application/vnd.api+json'
+            'Content-Type': 'application/vnd.api+json',
           },
           body: JSON.stringify({
-            'data': {
-              'test': 123
-            }
-          })
+            data: {
+              test: 123,
+            },
+          }),
         }
         request(data, (err, res, json) => {
           assert.equal(err, null)
@@ -51,15 +51,15 @@ describe('Testing jsonapi-server', () => {
           method: 'patch',
           url: 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb',
           headers: {
-            'Content-Type': 'application/vnd.api+json'
+            'Content-Type': 'application/vnd.api+json',
           },
           body: JSON.stringify({
-            'data': {
-              'attributes': {
-                'timestamp': 'foobar-date'
-              }
-            }
-          })
+            data: {
+              attributes: {
+                timestamp: 'foobar-date',
+              },
+            },
+          }),
         }
         request(data, (err, res, json) => {
           assert.equal(err, null)
@@ -75,17 +75,17 @@ describe('Testing jsonapi-server', () => {
           method: 'patch',
           url: 'http://localhost:16006/rest/articles/d850ea75-4427-4f81-8595-039990aeede5',
           headers: {
-            'Content-Type': 'application/vnd.api+json'
+            'Content-Type': 'application/vnd.api+json',
           },
           body: JSON.stringify({
-            'data': {
-              'relationships': {
-                'author': {
-                  'data': { 'foo': 'bar' }
-                }
-              }
-            }
-          })
+            data: {
+              relationships: {
+                author: {
+                  data: { foo: 'bar' },
+                },
+              },
+            },
+          }),
         }
         request(data, (err, res, json) => {
           assert.equal(err, null)
@@ -101,17 +101,17 @@ describe('Testing jsonapi-server', () => {
           method: 'patch',
           url: 'http://localhost:16006/rest/articles/d850ea75-4427-4f81-8595-039990aeede5',
           headers: {
-            'Content-Type': 'application/vnd.api+json'
+            'Content-Type': 'application/vnd.api+json',
           },
           body: JSON.stringify({
-            'data': {
-              'relationships': {
-                'tags': {
-                  'data': [ undefined ]
-                }
-              }
-            }
-          })
+            data: {
+              relationships: {
+                tags: {
+                  data: [undefined],
+                },
+              },
+            },
+          }),
         }
         helpers.request(data, (err, res, json) => {
           assert.equal(err, null)
@@ -127,17 +127,23 @@ describe('Testing jsonapi-server', () => {
           method: 'patch',
           url: 'http://localhost:16006/rest/articles/d850ea75-4427-4f81-8595-039990aeede5',
           headers: {
-            'Content-Type': 'application/vnd.api+json'
+            'Content-Type': 'application/vnd.api+json',
           },
           body: JSON.stringify({
-            'data': {
-              'relationships': {
-                'tags': {
-                  'data': [ { 'type': 'tags', 'id': '2a3bdea4-a889-480d-b886-104498c86f69' }, undefined ]
-                }
-              }
-            }
-          })
+            data: {
+              relationships: {
+                tags: {
+                  data: [
+                    {
+                      type: 'tags',
+                      id: '2a3bdea4-a889-480d-b886-104498c86f69',
+                    },
+                    undefined,
+                  ],
+                },
+              },
+            },
+          }),
         }
         helpers.request(data, (err, res, json) => {
           assert.equal(err, null)
@@ -154,16 +160,16 @@ describe('Testing jsonapi-server', () => {
         method: 'patch',
         url: 'http://localhost:16006/rest/articles/d850ea75-4427-4f81-8595-039990aeede5',
         headers: {
-          'Content-Type': 'application/vnd.api+json'
+          'Content-Type': 'application/vnd.api+json',
         },
         body: JSON.stringify({
-          'data': {
-            'attributes': {
-              'title': 'How to use AWS'
+          data: {
+            attributes: {
+              title: 'How to use AWS',
               // content, a required attribute, is missing.
-            }
-          }
-        })
+            },
+          },
+        }),
       }
       request(data, (err, res, json) => {
         assert.equal(err, null)
@@ -181,23 +187,26 @@ describe('Testing jsonapi-server', () => {
           method: 'patch',
           url: 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb',
           headers: {
-            'Content-Type': 'application/vnd.api+json'
+            'Content-Type': 'application/vnd.api+json',
           },
           body: JSON.stringify({
-            'data': {
-              'attributes': {
-                'timestamp': '2017-06-29'
+            data: {
+              attributes: {
+                timestamp: '2017-06-29',
               },
-              'relationships': {
-                'author': {
-                  'data': { 'type': 'people', 'id': 'd850ea75-4427-4f81-8595-039990aeede5' }
-                }
+              relationships: {
+                author: {
+                  data: {
+                    type: 'people',
+                    id: 'd850ea75-4427-4f81-8595-039990aeede5',
+                  },
+                },
               },
-              'meta': {
-                'created': '2013-01-01'
-              }
-            }
-          })
+              meta: {
+                created: '2013-01-01',
+              },
+            },
+          }),
         }
         request(data, (err, res, json) => {
           assert.equal(err, null)
@@ -210,62 +219,68 @@ describe('Testing jsonapi-server', () => {
       })
 
       it('new resource has changed', done => {
-        const url = 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb'
-        helpers.request({
-          method: 'GET',
-          url
-        }, (err, res, json) => {
-          assert.equal(err, null)
-          json = helpers.validateJson(json)
+        const url =
+          'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb'
+        helpers.request(
+          {
+            method: 'GET',
+            url,
+          },
+          (err, res, json) => {
+            assert.equal(err, null)
+            json = helpers.validateJson(json)
 
-          assert.equal(res.statusCode, '200', 'Expecting 200')
+            assert.equal(res.statusCode, '200', 'Expecting 200')
 
-          assert.deepEqual(json.data, {
-            'type': 'comments',
-            'id': '3f1a89c2-eb85-4799-a048-6735db24b7eb',
-            'attributes': {
-              'body': 'I like XML better',
-              'timestamp': '2017-06-29'
-            },
-            'links': {
-              'self': 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb'
-            },
-            'relationships': {
-              'author': {
-                'meta': {
-                  'relation': 'primary',
-                  'readOnly': false
-                },
-                'links': {
-                  'self': 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb/relationships/author',
-                  'related': 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb/author'
-                },
-                'data': {
-                  'type': 'people',
-                  'id': 'd850ea75-4427-4f81-8595-039990aeede5'
-                }
+            assert.deepEqual(json.data, {
+              type: 'comments',
+              id: '3f1a89c2-eb85-4799-a048-6735db24b7eb',
+              attributes: {
+                body: 'I like XML better',
+                timestamp: '2017-06-29',
               },
-              'article': {
-                'meta': {
-                  'relation': 'foreign',
-                  'belongsTo': 'articles',
-                  'as': 'comments',
-                  'readOnly': true,
-                  'many': false
+              links: {
+                self: 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb',
+              },
+              relationships: {
+                author: {
+                  meta: {
+                    relation: 'primary',
+                    readOnly: false,
+                  },
+                  links: {
+                    self: 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb/relationships/author',
+                    related:
+                      'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb/author',
+                  },
+                  data: {
+                    type: 'people',
+                    id: 'd850ea75-4427-4f81-8595-039990aeede5',
+                  },
                 },
-                'links': {
-                  'self': 'http://localhost:16006/rest/articles/relationships/?comments=3f1a89c2-eb85-4799-a048-6735db24b7eb',
-                  'related': 'http://localhost:16006/rest/articles/?filter[comments]=3f1a89c2-eb85-4799-a048-6735db24b7eb'
-                }
-              }
-            },
-            'meta': {
-              'created': '2013-01-01'
-            }
-          })
+                article: {
+                  meta: {
+                    relation: 'foreign',
+                    belongsTo: 'articles',
+                    as: 'comments',
+                    readOnly: true,
+                    many: false,
+                  },
+                  links: {
+                    self: 'http://localhost:16006/rest/articles/relationships/?comments=3f1a89c2-eb85-4799-a048-6735db24b7eb',
+                    related:
+                      'http://localhost:16006/rest/articles/?filter[comments]=3f1a89c2-eb85-4799-a048-6735db24b7eb',
+                  },
+                },
+              },
+              meta: {
+                created: '2013-01-01',
+              },
+            })
 
-          done()
-        })
+            done()
+          }
+        )
       })
 
       it('deletes a relationship', done => {
@@ -273,23 +288,23 @@ describe('Testing jsonapi-server', () => {
           method: 'patch',
           url: 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb',
           headers: {
-            'Content-Type': 'application/vnd.api+json'
+            'Content-Type': 'application/vnd.api+json',
           },
           body: JSON.stringify({
-            'data': {
-              'attributes': {
-                'timestamp': '2017-06-29'
+            data: {
+              attributes: {
+                timestamp: '2017-06-29',
               },
-              'relationships': {
-                'author': {
-                  'data': null
-                }
+              relationships: {
+                author: {
+                  data: null,
+                },
               },
-              'meta': {
-                'created': '2013-01-01'
-              }
-            }
-          })
+              meta: {
+                created: '2013-01-01',
+              },
+            },
+          }),
         }
         request(data, (err, res, json) => {
           assert.equal(err, null)
@@ -302,59 +317,65 @@ describe('Testing jsonapi-server', () => {
       })
 
       it('new resource has changed', done => {
-        const url = 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb'
-        helpers.request({
-          method: 'GET',
-          url
-        }, (err, res, json) => {
-          assert.equal(err, null)
-          json = helpers.validateJson(json)
+        const url =
+          'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb'
+        helpers.request(
+          {
+            method: 'GET',
+            url,
+          },
+          (err, res, json) => {
+            assert.equal(err, null)
+            json = helpers.validateJson(json)
 
-          assert.equal(res.statusCode, '200', 'Expecting 200')
+            assert.equal(res.statusCode, '200', 'Expecting 200')
 
-          assert.deepEqual(json.data, {
-            'type': 'comments',
-            'id': '3f1a89c2-eb85-4799-a048-6735db24b7eb',
-            'attributes': {
-              'body': 'I like XML better',
-              'timestamp': '2017-06-29'
-            },
-            'links': {
-              'self': 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb'
-            },
-            'relationships': {
-              'author': {
-                'meta': {
-                  'relation': 'primary',
-                  'readOnly': false
-                },
-                'links': {
-                  'self': 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb/relationships/author',
-                  'related': 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb/author'
-                },
-                'data': null
+            assert.deepEqual(json.data, {
+              type: 'comments',
+              id: '3f1a89c2-eb85-4799-a048-6735db24b7eb',
+              attributes: {
+                body: 'I like XML better',
+                timestamp: '2017-06-29',
               },
-              'article': {
-                'meta': {
-                  'relation': 'foreign',
-                  'belongsTo': 'articles',
-                  'as': 'comments',
-                  'readOnly': true,
-                  'many': false
+              links: {
+                self: 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb',
+              },
+              relationships: {
+                author: {
+                  meta: {
+                    relation: 'primary',
+                    readOnly: false,
+                  },
+                  links: {
+                    self: 'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb/relationships/author',
+                    related:
+                      'http://localhost:16006/rest/comments/3f1a89c2-eb85-4799-a048-6735db24b7eb/author',
+                  },
+                  data: null,
                 },
-                'links': {
-                  'self': 'http://localhost:16006/rest/articles/relationships/?comments=3f1a89c2-eb85-4799-a048-6735db24b7eb',
-                  'related': 'http://localhost:16006/rest/articles/?filter[comments]=3f1a89c2-eb85-4799-a048-6735db24b7eb'
-                }
-              }
-            },
-            'meta': {
-              'created': '2013-01-01'
-            }
-          })
+                article: {
+                  meta: {
+                    relation: 'foreign',
+                    belongsTo: 'articles',
+                    as: 'comments',
+                    readOnly: true,
+                    many: false,
+                  },
+                  links: {
+                    self: 'http://localhost:16006/rest/articles/relationships/?comments=3f1a89c2-eb85-4799-a048-6735db24b7eb',
+                    related:
+                      'http://localhost:16006/rest/articles/?filter[comments]=3f1a89c2-eb85-4799-a048-6735db24b7eb',
+                  },
+                },
+              },
+              meta: {
+                created: '2013-01-01',
+              },
+            })
 
-          done()
-        })
+            done()
+          }
+        )
       })
     })
   })

@@ -16,26 +16,29 @@ describe('Testing jsonapi-server', () => {
           method: 'post',
           url: 'http://localhost:16006/rest/people',
           headers: {
-            'Content-Type': 'application/vnd.api+json'
+            'Content-Type': 'application/vnd.api+json',
           },
           body: JSON.stringify({
-            'data': {
-              'id': id,
-              'type': 'people',
-              'attributes': {
+            data: {
+              id: id,
+              type: 'people',
+              attributes: {
                 firstname: 'Harry',
                 lastname: 'Potter',
-                email: 'harry.potter@hogwarts.edu.uk'
-              }
-            }
-          })
+                email: 'harry.potter@hogwarts.edu.uk',
+              },
+            },
+          }),
         }
         helpers.request(data, (err, res, json) => {
           assert.equal(err, null)
           json = helpers.validateJson(json)
 
           assert.equal(json.data.id, id)
-          assert.equal(res.headers.location, `http://localhost:16006/rest/people/${json.data.id}`)
+          assert.equal(
+            res.headers.location,
+            `http://localhost:16006/rest/people/${json.data.id}`
+          )
           assert.equal(res.statusCode, '201', 'Expecting 201')
           assert.equal(json.data.type, 'people', 'Should be a people resource')
 
@@ -45,30 +48,37 @@ describe('Testing jsonapi-server', () => {
 
       it('new resource is retrievable', done => {
         const url = `http://localhost:16006/rest/people/${id}`
-        helpers.request({
-          method: 'GET',
-          url
-        }, (err, res, json) => {
-          assert.equal(err, null)
-          json = helpers.validateJson(json)
+        helpers.request(
+          {
+            method: 'GET',
+            url,
+          },
+          (err, res, json) => {
+            assert.equal(err, null)
+            json = helpers.validateJson(json)
 
-          assert.equal(res.statusCode, '200', 'Expecting 200 OK')
-          assert.equal(json.included.length, 0, 'Should be no included resources')
+            assert.equal(res.statusCode, '200', 'Expecting 200 OK')
+            assert.equal(
+              json.included.length,
+              0,
+              'Should be no included resources'
+            )
 
-          done()
-        })
+            done()
+          }
+        )
       })
 
       it('deletes the resource', done => {
         const data = {
           method: 'delete',
-          url: 'http://localhost:16006/rest/people/' + id
+          url: 'http://localhost:16006/rest/people/' + id,
         }
         request(data, (err, res, json) => {
           assert.equal(err, null)
           json = JSON.parse(json)
           const keys = Object.keys(json)
-          assert.deepEqual(keys, [ 'meta' ], 'Should only have a meta block')
+          assert.deepEqual(keys, ['meta'], 'Should only have a meta block')
           assert.equal(res.statusCode, '200', 'Expecting 200')
 
           done()

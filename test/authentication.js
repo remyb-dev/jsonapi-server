@@ -12,8 +12,8 @@ describe('Testing jsonapi-server', () => {
         method: 'get',
         url: 'http://localhost:16006/rest/articles',
         headers: {
-          'blockMe': 'please'
-        }
+          blockMe: 'please',
+        },
       }
       request(data, (err, res, json) => {
         assert.equal(err, null)
@@ -28,8 +28,8 @@ describe('Testing jsonapi-server', () => {
         method: 'get',
         url: 'http://localhost:16006/rest/articles',
         headers: {
-          'cookie': 'blockMe=please'
-        }
+          cookie: 'blockMe=please',
+        },
       }
       request(data, (err, res, json) => {
         assert.equal(err, null)
