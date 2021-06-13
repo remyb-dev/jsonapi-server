@@ -2,7 +2,6 @@
 
 const assert = require('assert')
 const helpers = require('./helpers.js')
-const request = require('request')
 const jsonApiTestServer = require('../example/server.js')
 
 describe('Testing jsonapi-server', () => {
@@ -16,7 +15,7 @@ describe('Testing jsonapi-server', () => {
         },
         (err, res, json) => {
           assert.equal(err, null)
-          // helpers.validateError(json)
+          helpers.validateError(json)
           assert.equal(res.statusCode, '404', 'Expecting 404')
           done()
         }
@@ -46,8 +45,8 @@ describe('Testing jsonapi-server', () => {
 
     it('valid lookup', done => {
       const url =
-        ''
-      helpers.request(http://localhost:16006/rest/articles/de305d54-75b4-431b-adb2-eb6b9e546014
+        'http://localhost:16006/rest/articles/de305d54-75b4-431b-adb2-eb6b9e546014'
+      helpers.request(
         {
           method: 'GET',
           url,

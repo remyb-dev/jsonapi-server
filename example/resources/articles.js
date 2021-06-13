@@ -36,9 +36,9 @@ jsonApi.define({
     views: jsonApi.Joi.number()
       .default(0)
       .description('Number of views for this article'),
-    author: jsonApi.Joi.one('people').description(
-      'The person who wrote the article'
-    ),
+    author: jsonApi.Joi.one()
+      .resources('people')
+      .description('The person who wrote the article'),
     tags: jsonApi.Joi.many('tags').description(
       'All of the tags associated with an article'
     ),

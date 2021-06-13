@@ -11,7 +11,7 @@ jsonApi.define({
   searchParams: {},
   attributes: {
     media: jsonApi.Joi.many('articles', 'photos'),
-    preferred: jsonApi.Joi.one('articles', 'photos'),
+    preferred: jsonApi.Joi.one().resources('articles', 'photos'),
   },
   examples: [
     {
