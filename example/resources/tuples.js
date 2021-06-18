@@ -10,7 +10,7 @@ jsonApi.define({
   handlers: tupleHandler,
   searchParams: {},
   attributes: {
-    media: jsonApi.Joi.many('articles', 'photos'),
+    media: jsonApi.Joi.many().resources('articles', 'photos'),
     preferred: jsonApi.Joi.one().resources('articles', 'photos'),
   },
   examples: [

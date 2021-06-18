@@ -39,15 +39,15 @@ jsonApi.define({
     author: jsonApi.Joi.one()
       .resources('people')
       .description('The person who wrote the article'),
-    tags: jsonApi.Joi.many('tags').description(
-      'All of the tags associated with an article'
-    ),
-    photos: jsonApi.Joi.many('photos').description(
-      'List of all the photos included in an article'
-    ),
-    comments: jsonApi.Joi.many('comments').description(
-      'All of the comments posted on this article'
-    ),
+    tags: jsonApi.Joi.many()
+      .resources('tags')
+      .description('All of the tags associated with an article'),
+    photos: jsonApi.Joi.many()
+      .resources('photos')
+      .description('List of all the photos included in an article'),
+    comments: jsonApi.Joi.many()
+      .resources('comments')
+      .description('All of the comments posted on this article'),
   },
   examples: [
     {
