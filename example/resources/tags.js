@@ -12,12 +12,12 @@ jsonApi.define({
   searchParams: {},
   attributes: {
     name: jsonApi.Joi.string().description('The tag name').example('Summer'),
-    articles: jsonApi.Joi.belongsToMany({
+    articles: jsonApi.Joi.belongsToMany().config({
       resource: 'articles',
       as: 'tags',
     }),
     parent: jsonApi.Joi.one().resources('tags'),
-    children: jsonApi.Joi.belongsToMany({
+    children: jsonApi.Joi.belongsToMany().config({
       resource: 'tags',
       as: 'parent',
     }),

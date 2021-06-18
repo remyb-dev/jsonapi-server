@@ -40,7 +40,7 @@ jsonApi.define({
     photographer: jsonApi.Joi.one()
       .resources('people')
       .description('The person who took the photo'),
-    articles: jsonApi.Joi.belongsToMany({
+    articles: jsonApi.Joi.belongsToMany().config({
       resource: 'articles',
       as: 'photos',
     }),

@@ -22,11 +22,11 @@ jsonApi.define({
       .email()
       .description('The persons preferred contact email address')
       .example('john.smith@gmail.com'),
-    articles: jsonApi.Joi.belongsToMany({
+    articles: jsonApi.Joi.belongsToMany().config({
       resource: 'articles',
       as: 'author',
     }),
-    photos: jsonApi.Joi.belongsToMany({
+    photos: jsonApi.Joi.belongsToMany().config({
       resource: 'photos',
       as: 'photographer',
     }),
