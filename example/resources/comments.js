@@ -21,7 +21,7 @@ jsonApi.define({
     author: jsonApi.Joi.one()
       .resources('people')
       .description('The person who wrote the comment'),
-    article: jsonApi.Joi.belongsToOne({
+    article: jsonApi.Joi.belongsToOne().config({
       resource: 'articles',
       as: 'comments',
     }),
